@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Data & model artifacts (regenerable / too large for git)
+data/
+outputs/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.npz
+
+# Keep experiment logs and generated sample media that document real results
+!experiments/**/*.json
+!experiments/**/*.csv
+!assets/**/*.gif
+!assets/**/*.png
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

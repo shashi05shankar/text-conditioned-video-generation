@@ -1,0 +1,18 @@
+
+The cell printed `r.stdout or r.stderr` and never checked the return code,
+so a failed clone showed nothing useful -- IPython's bare "To exit: use
+'exit'" warning from the SystemExit was all the user saw, with no indication
+of why git failed.
+
+Now always prints the exit code, stdout and stderr, checks returncode
+explicitly, and names the usual cause (Internet disabled on Kaggle) with the
+fix. Hiding a subprocess's stderr is exactly the wrong tradeoff at a step
+that fails for environmental reasons.
+
+Also made build_kaggle_nb.py write relative to its own location rather than
+a hardcoded Windows path.
+
+Verified both branches: a bad URL surfaces "Repository not found" then the
+guidance (exit 1), and the real public repo clones and chdirs cleanly
+(exit 0) -- which also confirms the repository is publicly reachable.
+

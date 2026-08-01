@@ -1,0 +1,29 @@
+# Bouncing MNIST + generated captions dataset.
+# Consumed by scripts/build_dataset.py.
+
+canvas_size: 64      # 64x64 keeps models small enough for a free-tier GPU
+num_frames: 16       # long enough to show real motion and a bounce, short enough to be cheap
+two_digit_prob: 0.3  # mostly single-digit clips; some two-digit ones exercise object count
+bounce_prob: 0.5     # balanced bounce/no-bounce. Uniform random placement gives ~90%
+                     # bounces, which would make "bounces off the wall" a near-constant
+                     # phrase and useless as a caption attribute.
+
+# Split sizes. Train is large enough to learn from but still builds in ~1 minute
+# and fits comfortably in Colab storage (~200MB as uint8).
+splits:
+  train:
+    num_clips: 20000
+    mnist_train: true    # sprites drawn from the MNIST *train* images
+    seed: 1000
+  val:
+    num_clips: 2000
+    mnist_train: false   # sprites from MNIST *test* images -- unseen digit renderings
+    seed: 2000
+  test:
+    num_clips: 2000
+    mnist_train: false
+    seed: 3000
+
+paths:
+  mnist_root: data/raw       # torchvision MNIST download cache
+  output_root: data/processed

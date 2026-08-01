@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "text2video"
+version = "0.1.0"
+description = "Text-conditioned short video generation with a conditional VAE + ConvLSTM temporal decoder"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.2",
+    "torchvision>=0.17",
+    "numpy>=1.26",
+    "PyYAML>=6.0",
+    "scikit-image>=0.22",   # SSIM for temporal consistency
+    "opencv-python-headless>=4.9",  # Farneback optical flow for motion magnitude
+    "imageio>=2.34",        # GIF/MP4 export
+    "matplotlib>=3.8",      # sample grids, loss curves
+]
+
+[project.optional-dependencies]
+clip = ["open_clip_torch>=2.24"]     # frozen text encoder + CLIPSIM metric
+demo = ["streamlit>=1.33"]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "slow: tests that download pretrained weights or take >10s (deselect with '-m \"not slow\"')",
+]
